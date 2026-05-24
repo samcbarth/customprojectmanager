@@ -88,7 +88,6 @@ body {
   border-radius: var(--radius-lg);
 }
 
-.entry-card h2,
 .board-toolbar h3 {
   margin: 0 0 8px;
 }

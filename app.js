@@ -129,7 +129,6 @@ const workspaceTitle = document.getElementById("workspaceTitle");
 const summaryGrid = document.getElementById("summaryGrid");
 const taskTableBody = document.getElementById("taskTableBody");
 const taskSearch = document.getElementById("taskSearch");
-const workspaceName = document.getElementById("workspaceName");
 const workspacePassword = document.getElementById("workspacePassword");
 const passwordError = document.getElementById("passwordError");
 const taskDialog = document.getElementById("taskDialog");
@@ -173,9 +172,9 @@ function normalizePassword(value) {
   return value.trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function findWorkspaceByEntry(value) {
+function findWorkspaceByPassword(value) {
   return workspaceDefinitions.find(
-    (workspace) => normalizePassword(workspace.name) === normalizePassword(value)
+    (workspace) => normalizePassword(workspace.password) === normalizePassword(value)
   );
 }
 
@@ -353,14 +352,9 @@ function addTask(formData) {
 
 entryForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const workspace = findWorkspaceByEntry(workspaceName.value);
+  const workspace = findWorkspaceByPassword(workspacePassword.value);
 
   if (!workspace) {
-    passwordError.textContent = "Workspace not found. Use CC LLC, LAIRE, or OLLIE.";
-    return;
-  }
-
-  if (normalizePassword(workspacePassword.value) !== normalizePassword(workspace.password)) {
     passwordError.textContent = "Incorrect password. Try again.";
     return;
   }
@@ -410,7 +404,6 @@ switchWorkspaceButton.addEventListener("click", () => {
   state.searchTerm = "";
   taskSearch.value = "";
   managerPanel.classList.add("hidden");
-  workspaceName.value = "";
   workspacePassword.value = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
