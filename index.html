@@ -14,14 +14,29 @@
     <section class="hero-panel">
       <div class="hero-copy">
         <p class="eyebrow">Custom Project Manager</p>
-        <h1>Simple workspace planning with a familiar monday-style flow.</h1>
+        <h1>Project Manager</h1>
         <p class="hero-text">
-          Pick a workspace, enter the password, and manage projects in a cleaner,
-          lighter layout built for quick status updates.
+          Enter your workspace and password to open a simplified monday-style board.
         </p>
       </div>
 
-      <div class="workspace-selector" id="workspaceSelector"></div>
+      <form class="entry-card" id="entryForm">
+        <div>
+          <p class="eyebrow">Workspace Entry</p>
+          <h2>Sign In</h2>
+          <p class="hero-text">Use `CC LLC`, `LAIRE`, or `OLLIE`.</p>
+        </div>
+
+        <label class="dialog-label" for="workspaceName">Workspace</label>
+        <input id="workspaceName" name="workspaceName" type="text" placeholder="CC LLC" required>
+
+        <label class="dialog-label" for="workspacePassword">Password</label>
+        <input id="workspacePassword" name="workspacePassword" type="password" autocomplete="current-password" required>
+
+        <p class="error-text" id="passwordError" role="alert"></p>
+
+        <button class="primary-button" type="submit">Enter Workspace</button>
+      </form>
     </section>
 
     <section class="manager-panel hidden" id="managerPanel" aria-live="polite">
@@ -72,25 +87,6 @@
       </section>
     </section>
   </div>
-
-  <dialog class="entry-dialog" id="passwordDialog">
-    <form method="dialog" class="dialog-card" id="passwordForm">
-      <div>
-        <p class="eyebrow">Workspace Entry</p>
-        <h3 id="dialogWorkspaceTitle">Enter Password</h3>
-        <p class="dialog-text">Use the workspace password to continue.</p>
-      </div>
-
-      <label class="dialog-label" for="workspacePassword">Password</label>
-      <input id="workspacePassword" name="workspacePassword" type="password" autocomplete="current-password" required>
-      <p class="error-text" id="passwordError" role="alert"></p>
-
-      <div class="dialog-actions">
-        <button class="ghost-button" id="cancelDialogButton" type="button">Cancel</button>
-        <button class="primary-button" type="submit">Enter Workspace</button>
-      </div>
-    </form>
-  </dialog>
 
   <dialog class="entry-dialog" id="taskDialog">
     <form method="dialog" class="dialog-card" id="taskForm">

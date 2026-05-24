@@ -120,26 +120,22 @@ const workspaceDefinitions = [
 
 const state = {
   activeWorkspaceId: null,
-  pendingWorkspaceId: null,
   searchTerm: ""
 };
 
-const workspaceSelector = document.getElementById("workspaceSelector");
+const entryForm = document.getElementById("entryForm");
 const managerPanel = document.getElementById("managerPanel");
 const workspaceTitle = document.getElementById("workspaceTitle");
 const summaryGrid = document.getElementById("summaryGrid");
 const taskTableBody = document.getElementById("taskTableBody");
 const taskSearch = document.getElementById("taskSearch");
-const passwordDialog = document.getElementById("passwordDialog");
-const passwordForm = document.getElementById("passwordForm");
+const workspaceName = document.getElementById("workspaceName");
 const workspacePassword = document.getElementById("workspacePassword");
 const passwordError = document.getElementById("passwordError");
-const dialogWorkspaceTitle = document.getElementById("dialogWorkspaceTitle");
 const taskDialog = document.getElementById("taskDialog");
 const taskForm = document.getElementById("taskForm");
 const switchWorkspaceButton = document.getElementById("switchWorkspaceButton");
 const addTaskButton = document.getElementById("addTaskButton");
-const cancelDialogButton = document.getElementById("cancelDialogButton");
 const cancelTaskDialogButton = document.getElementById("cancelTaskDialogButton");
 
 function getWorkspaceStorageKey(workspaceId) {
@@ -177,31 +173,10 @@ function normalizePassword(value) {
   return value.trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function renderWorkspaceCards() {
-  workspaceSelector.innerHTML = "";
-
-  workspaceDefinitions.forEach((workspace) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "workspace-card";
-    button.innerHTML = `
-      <h3>${workspace.name}</h3>
-      <p>${workspace.description}</p>
-      <span class="workspace-tag">${workspace.accent}</span>
-    `;
-    button.addEventListener("click", () => openPasswordDialog(workspace.id));
-    workspaceSelector.appendChild(button);
-  });
-}
-
-function openPasswordDialog(workspaceId) {
-  state.pendingWorkspaceId = workspaceId;
-  const workspace = getWorkspaceById(workspaceId);
-  dialogWorkspaceTitle.textContent = `${workspace.name} Password`;
-  workspacePassword.value = "";
-  passwordError.textContent = "";
-  passwordDialog.showModal();
-  setTimeout(() => workspacePassword.focus(), 20);
+function findWorkspaceByEntry(value) {
+  return workspaceDefinitions.find(
+    (workspace) => normalizePassword(workspace.name) === normalizePassword(value)
+  );
 }
 
 function enterWorkspace(workspaceId) {
@@ -376,25 +351,21 @@ function addTask(formData) {
   renderActiveWorkspace();
 }
 
-workspaceSelector.addEventListener("click", (event) => {
-  const button = event.target.closest(".workspace-card");
-  if (!button) {
+entryForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const workspace = findWorkspaceByEntry(workspaceName.value);
+
+  if (!workspace) {
+    passwordError.textContent = "Workspace not found. Use CC LLC, LAIRE, or OLLIE.";
     return;
   }
-
-  button.blur();
-});
-
-passwordForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const workspace = getWorkspaceById(state.pendingWorkspaceId);
 
   if (normalizePassword(workspacePassword.value) !== normalizePassword(workspace.password)) {
     passwordError.textContent = "Incorrect password. Try again.";
     return;
   }
 
-  passwordDialog.close();
+  passwordError.textContent = "";
   enterWorkspace(workspace.id);
 });
 
@@ -439,6 +410,8 @@ switchWorkspaceButton.addEventListener("click", () => {
   state.searchTerm = "";
   taskSearch.value = "";
   managerPanel.classList.add("hidden");
+  workspaceName.value = "";
+  workspacePassword.value = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
@@ -453,7 +426,4 @@ taskForm.addEventListener("submit", (event) => {
   taskDialog.close();
 });
 
-cancelDialogButton.addEventListener("click", () => passwordDialog.close());
 cancelTaskDialogButton.addEventListener("click", () => taskDialog.close());
-
-renderWorkspaceCards();
