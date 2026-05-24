@@ -173,6 +173,10 @@ function normalizeLabel(value) {
   return value.toLowerCase().replace(/\s+/g, "-");
 }
 
+function normalizePassword(value) {
+  return value.trim().replace(/\s+/g, "").toUpperCase();
+}
+
 function renderWorkspaceCards() {
   workspaceSelector.innerHTML = "";
 
@@ -385,7 +389,7 @@ passwordForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const workspace = getWorkspaceById(state.pendingWorkspaceId);
 
-  if (workspacePassword.value !== workspace.password) {
+  if (normalizePassword(workspacePassword.value) !== normalizePassword(workspace.password)) {
     passwordError.textContent = "Incorrect password. Try again.";
     return;
   }
