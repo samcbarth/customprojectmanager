@@ -172,9 +172,11 @@ function normalizePassword(value) {
   return value.trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function findWorkspaceByPassword(value) {
+function findWorkspaceByEntry(value) {
   return workspaceDefinitions.find(
-    (workspace) => normalizePassword(workspace.password) === normalizePassword(value)
+    (workspace) =>
+      normalizePassword(workspace.password) === normalizePassword(value) ||
+      normalizePassword(workspace.name) === normalizePassword(value)
   );
 }
 
@@ -352,7 +354,7 @@ function addTask(formData) {
 
 entryForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const workspace = findWorkspaceByPassword(workspacePassword.value);
+  const workspace = findWorkspaceByEntry(workspacePassword.value);
 
   if (!workspace) {
     passwordError.textContent = "Incorrect password. Try again.";
