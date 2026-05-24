@@ -3,7 +3,7 @@ const workspaceDefinitions = [
     id: "cc-llc",
     name: "CC LLC",
     description: "Core company operations, client delivery, and internal follow-through.",
-    password: "CCLLC2026",
+    password: "CCLLC",
     accent: "Delivery Workspace",
     tasks: [
       {
@@ -42,7 +42,7 @@ const workspaceDefinitions = [
     id: "laire",
     name: "LAIRE",
     description: "Creative planning, campaigns, and brand execution in one simplified board.",
-    password: "LAIRE2026",
+    password: "LAIRE",
     accent: "Creative Workspace",
     tasks: [
       {
@@ -81,7 +81,7 @@ const workspaceDefinitions = [
     id: "ollie",
     name: "OLLIE",
     description: "A lightweight workspace for day-to-day tasks, launches, and owner visibility.",
-    password: "OLLIE2026",
+    password: "OLLIE",
     accent: "Growth Workspace",
     tasks: [
       {

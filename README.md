@@ -10,9 +10,9 @@ A simplified monday-style project manager designed to run directly on GitHub Pag
 
 ## Default workspace passwords
 
-- `CC LLC`: `CCLLC2026`
-- `LAIRE`: `LAIRE2026`
-- `OLLIE`: `OLLIE2026`
+- `CC LLC`: `CCLLC`
+- `LAIRE`: `LAIRE`
+- `OLLIE`: `OLLIE`
 
 Important: because this app is static and intended for GitHub Pages, these passwords are front-end only. They help with a basic entry screen, but they are not secure authentication.
 
